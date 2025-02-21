@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lemon AI - Your Personal AI Assistant</title>
     <!-- Import Poppins Font from Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Styling */
-        body {
-            font-family: 'Poppins', sans-serif;
+        /* Base CSS Styling */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
             background-color: #f9f9f9;
             color: #333;
+            line-height: 1.6;
         }
 
         header {
@@ -25,71 +30,78 @@
 
         header h1 {
             font-size: 2.5rem;
-            margin: 0;
+            margin-bottom: 10px;
         }
 
         header p {
             font-size: 1.2rem;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .hero-section {
-            background-color: #ffffff;
-            padding: 40px 20px;
+            background: linear-gradient(135deg, #6a0dad, #8a2be2);
+            color: white;
+            padding: 60px 20px;
             text-align: center;
         }
 
         .hero-section h2 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 20px;
         }
 
         .hero-section p {
-            font-size: 1rem;
-            line-height: 1.6;
+            font-size: 1.2rem;
             margin-bottom: 30px;
         }
 
         .cta-button {
             display: inline-block;
             padding: 15px 30px;
-            background-color: #6a0dad; /* Purple */
-            color: white;
+            background-color: #ffffff;
+            color: #6a0dad;
             font-size: 1rem;
-            font-weight: 500;
-            border-radius: 10px;
+            font-weight: 600;
+            border-radius: 50px;
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .cta-button:hover {
-            background-color: #510b8d; /* Darker Purple */
+            background-color: #f1f1f1;
         }
 
         .features-section {
             background-color: #ffffff;
-            padding: 40px 20px;
+            padding: 60px 20px;
             text-align: center;
         }
 
         .features-section h2 {
             font-size: 2rem;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .features-grid {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             flex-wrap: wrap;
+            gap: 20px;
         }
 
         .feature-card {
-            background-color: #f1f1f1;
+            background-color: #f9f9f9;
             padding: 20px;
             border-radius: 10px;
-            width: 30%;
-            margin-bottom: 20px;
+            width: 100%;
+            max-width: 300px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
         }
 
         .feature-card h3 {
@@ -99,20 +111,52 @@
 
         .feature-card p {
             font-size: 0.9rem;
-            line-height: 1.5;
+            color: #666;
         }
 
         footer {
-            background-color: #6a0dad; /* Purple */
+            background-color: #6a0dad;
             color: white;
             padding: 20px 0;
             text-align: center;
-            margin-top: 40px;
         }
 
         footer p {
-            margin: 0;
             font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .hero-section h2 {
+                font-size: 3rem;
+            }
+
+            .hero-section p {
+                font-size: 1.4rem;
+            }
+
+            .cta-button {
+                padding: 20px 40px;
+                font-size: 1.2rem;
+            }
+
+            .features-section h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-section {
+                padding: 80px 40px;
+            }
+
+            .features-section {
+                padding: 80px 40px;
+            }
+
+            .features-grid {
+                gap: 40px;
+            }
         }
     </style>
 </head>
@@ -125,8 +169,8 @@
 
     <!-- Hero Section -->
     <section class="hero-section">
-        <h2>Welcome to Lemon AI</h2>
-        <p>Lemon AI is your intelligent assistant designed to help you with tasks, answer questions, and provide insights. Whether you need help with work, school, or just want to chat, Lemon AI is here for you!</p>
+        <h2>Meet Lemon AI</h2>
+        <p>Your intelligent assistant designed to help with tasks, answer questions, and provide insights.</p>
         <a href="chatbot.html" class="cta-button">Start Chatting Now</a>
     </section>
 
@@ -136,15 +180,15 @@
         <div class="features-grid">
             <div class="feature-card">
                 <h3>Smart Conversations</h3>
-                <p>Lemon AI uses advanced AI technology to understand and respond to your queries in a natural and conversational way.</p>
+                <p>Lemon AI uses advanced AI technology to understand and respond to your queries naturally.</p>
             </div>
             <div class="feature-card">
                 <h3>24/7 Availability</h3>
-                <p>No matter the time or day, Lemon AI is always available to assist you whenever you need it.</p>
+                <p>No matter the time or day, Lemon AI is always here to assist you whenever you need it.</p>
             </div>
             <div class="feature-card">
                 <h3>Customizable Experience</h3>
-                <p>Tailor Lemon AI to fit your needs by customizing its responses and behavior to suit your preferences.</p>
+                <p>Tailor Lemon AI to fit your needs by customizing its responses and behavior.</p>
             </div>
         </div>
     </section>
@@ -155,3 +199,4 @@
     </footer>
 </body>
 </html>
+
