@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lemon AI Chatbot</title>
+    <!-- Import Poppins Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 400px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background-color: #6a0dad; /* Purple */
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .chat-box .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+            font-size: 0.95rem;
+        }
+
+        .chat-box .user-message {
+            background-color: #6a0dad; /* Purple */
+            color: white;
+            align-self: flex-end;
+        }
+
+        .chat-box .bot-message {
+            background-color: #f1f1f1;
+            color: black;
+            align-self: flex-start;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: #ffffff;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .chat-input button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            background-color: #6a0dad; /* Purple */
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .chat-input button:hover {
+            background-color: #510b8d; /* Darker Purple */
+        }
+    </style>
+</head>
+<body>
+    <!-- HTML Structure -->
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Lemon AI</h2>
+        </div>
+        <div class="chat-box" id="chat-box">
+            <!-- Chat messages will appear here -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message here...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        document.getElementById('send-btn').addEventListener('click', sendMessage);
+        document.getElementById('user-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value.trim();
+
+            if (message === '') return;
+
+            // Append user message to chat box
+            appendMessage(message, 'user-message');
+
+            // Clear input field
+            userInput.value = '';
+
+            // AIzaSyCFW1w84H96M9qRueCQRj1h0YWffGQT7NM
+            fetchResponseFromGemini(message);
+        }
+
+        function appendMessage(message, className) {
+            const chatBox = document.getElementById('chat-box');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', className);
+
+            // Add bot name for bot messages
+            if (className === 'bot-message') {
+                messageElement.innerHTML = `<strong>Lemon AI:</strong> ${message}`;
+            } else {
+                messageElement.textContent = message;
+            }
+
+            chatBox.appendChild(messageElement);
+
+            // Scroll to the bottom of the chat box
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function fetchResponseFromGemini(userMessage) {
+            const apiKey = 'AIzaSyCFW1w84H96M9qRueCQRj1h0YWffGQT7NM';  // Replace with your actual API key
+            const apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + apiKey;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{ text: userMessage }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                const botMessage = data.candidates[0].content.parts[0].text;
+
+                // Append bot's response to chat box
+                appendMessage(botMessage, 'bot-message');
+            } catch (error) {
+                console.error('Error fetching response from Gemini API:', error);
+                appendMessage('Sorry, I encountered an error. Please try again.', 'bot-message');
+            }
+        }
+    </script>
+</body>
+</html>
